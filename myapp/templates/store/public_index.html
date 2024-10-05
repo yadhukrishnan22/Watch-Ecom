@@ -1,0 +1,198 @@
+<!doctype html>
+{%load static%}
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+
+  .hero-bg {
+        background-image: url({%static 'images/timex3.jpg'%}); 
+        background-size: cover;
+        background-position: center;
+        height: 450px;
+        width: 920px;
+        
+    }
+ 
+</style>
+</head>
+<body>
+    {%csrf_token%}
+    <div class="fixed w-full bg-white ">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+          <div class="inline-flex items-center space-x-2">
+            <span>
+              <a href="#" class="flex items-center">
+                <img src={%static "images/logo.png"%}  alt="Logo" class="h-8 w-8 mr-2">
+                <span class="text-xl font-bold text-gray-800">HORA</span>
+            </a>
+            </span>
+          </div>
+          <div class="hidden grow items-start lg:flex">
+            <ul class="ml-12 inline-flex space-x-8">
+              <li>
+                <a
+                  href="{%url 'publicindex'%}"
+                  class="inline-flex items-center text-sm font-semibold text-gray-800 hover:text-gray-900"
+                >
+                  Home
+                  <span>
+                 
+                </a>
+              </li>
+              <li>
+               
+              </li>
+              <li>
+                
+              </li>
+            </ul>
+          </div>
+          <div class="hidden space-x-2 lg:block">
+
+
+
+            <a href="{%url 'sign-up'%}"><font color="blue">Doesn't have an account? <b>Sign Up</b></font></a>        
+           
+            <a
+              href="{%url 'sign-in'%}"
+              type="button"
+              class="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black hover:green-500"
+            >
+              Sign In
+            </a>
+          </div>
+          <div class="lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-6 w-6 cursor-pointer"
+            >
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <line x1="4" y1="6" x2="20" y2="6"></line>
+              <line x1="4" y1="18" x2="20" y2="18"></line>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+
+
+
+
+    <!-- Main Content -->
+    <div class="max-w-6xl mx-auto  py-12 flex">
+        <!-- Filter Section -->
+        <div class="w-1/4 bg-white shadow-lg rounded-lg p-4 mr-8">
+            <h2 class="text-xl font-bold mb-4">Filters</h2>
+            <form method="post">
+                {%csrf_token%}
+                <div class="mb-6">
+                    <h3 class="font-semibold mb-2">Brand</h3>
+                    <ul>
+    
+                        {%for b in brands%}
+    
+                        <li><input type="checkbox" class="mr-2" value="{{b.name}}" name="brandbox"> <span>{{b.name}}</span></li>
+    
+                        {%endfor%}
+                        
+                        
+                    </ul>
+                </div>
+
+                <div>
+                  <h3 class="font-semibold mb-2">Gender</h3>
+                  <ul>
+                      {%for g in gender%}
+
+                        <li><input type="checkbox" value="{{g.id}}" name="genderBox" class="mr-2"> <span>{{g.for_name}}</span></li>
+
+                      {%endfor%}
+                      
+                  </ul>                 
+              </div>
+
+              <div class="mb-6">
+                <h3 class="font-semibold mb-2">Type</h3>
+                <ul>
+                    {%for t in types%}
+
+                      <li><input type="checkbox" value="{{t.id}}" name="typeBox" class="mr-2"> <span>{{t.type_name}}</span></li>
+
+                    {%endfor%}
+                    
+                    
+                </ul>
+            </div>
+
+                <button type="submit" class="mt-2 inline-block bg-black text-white px-4 py-2 rounded hover:bg-gray-800">Apply Filter</button>
+            </form>
+
+           
+        
+
+           
+
+            
+        </div>
+
+        <!-- Product Showcase -->
+        <div class="w-3/4">
+            <header class="hero-bg text-white text-center py-20 mb-8">
+                <h1 class="text-4xl font-bold">Welcome to Our Online Store!</h1>
+                <p class="mt-4">Find the best products at unbeatable prices.</p>
+                <a href="#" class="mt-8 inline-block bg-white text-blue-500 px-6 py-2 rounded-full font-semibold">Shop Now</a>
+            </header>
+
+            <h2 class="text-3xl font-bold text-center mb-8">Featured Products</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+                <!-- Product Card -->
+
+
+               {%for p in products%}
+
+               <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                   <img src="{{p.image.url}}" style="height: 300px; width: 300px;" alt="Product 1" class="w-full h-48 object-cover">
+                   <div class="p-4">
+                       <h3 class="text-xl font-semibold">{{p.title}}</h3>
+                       <p class="text-gray-600">{{p.description}}</p>
+                       <a href="{%url 'publicproduct-details' p.id%}"  class="mt-2 inline-block bg-black text-white px-4 py-2 rounded ">View Details</a>
+                   </div>
+               </div>
+
+               {%endfor%}
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2024 ShopLogo. All rights reserved.</p>
+            <div class="mt-2">
+                <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                <span class="mx-2">|</span>
+                <a href="#" class="text-gray-400 hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+
+
+</body>
+</html>

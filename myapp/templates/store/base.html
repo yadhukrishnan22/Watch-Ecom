@@ -1,0 +1,119 @@
+<!doctype html>
+
+{%load static%}
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hero-bg {
+        background-image: url({%static 'images/timex3.jpg'%}); 
+        background-size: cover;
+        background-position: center;
+
+        height: 450px;
+        width: 920px;
+
+        
+    }
+
+</style>
+<script src="https://kit.fontawesome.com/bbd50d1f80.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    {%csrf_token%}
+    <div class="relative w-full bg-white">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
+          <div class="inline-flex items-center space-x-2">
+    
+            <a href="#" class="flex items-center">
+              <img src={%static "images/logo.png"%}  alt="Logo" class="h-8 w-8 mr-2">
+              <span class="text-xl font-bold text-gray-800">HORA</span>
+          </a>
+            
+          </div>
+          <div class="hidden grow items-start lg:flex">
+            <ul class="ml-12 inline-flex space-x-8">
+              <li>
+                <a
+                  href="{%url 'index'%}"
+                  class="inline-flex items-center text-sm font-semibold text-gray-800 hover:text-gray-900"
+                >
+                  Home
+                
+                </a>
+              </li>
+              <li>
+            
+              </li>
+              <li>
+                
+              </li>
+            </ul>
+          </div>
+          <div class="hidden space-x-2 lg:block">
+
+
+            <a
+            href="{%url 'cart-list'%}"
+            class="inline-flex items-center text-sm font-semibold text-gray-800 hover:text-gray-900 px-6"
+          ><i class="fa-solid fa-cart-shopping p-2 fa-lg"></i>
+            My Cart
+       
+          </a>
+
+           <!-- Account -->
+            <div class="relative inline-block text-left">
+              <div>
+                  <button class="inline-flex justify-between w-full rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="options-menu" aria-haspopup="true" aria-expanded="true">
+                     <i class="fa-solid fa-user p-1 w-6"></i>  Account
+                     
+                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                      </svg>
+                  </button>
+              </div>
+      
+              <!-- Dropdown menu -->
+              <div class="absolute right-0 z-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="options-menu" id="dropdown-menu">
+                  <div class="py-1" role="none">
+                      <a href="{%url 'profile-edit' request.user.profile.id%}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem">Profile</a>
+                      <a href="{%url 'purchase-view'%}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem">My Orders</a>
+                      <a href="{%url 'sign-out'%}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem">Logout</a>
+                  </div>
+              </div>
+          </div>
+
+
+    
+          </div>
+          
+        </div>
+      </div>
+
+
+      
+{%block main_block%}     
+
+{%endblock%}
+
+<script>
+  const button = document.getElementById('options-menu');
+  const dropdownMenu = document.getElementById('dropdown-menu');
+
+  button.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+  });
+
+  // Close dropdown if clicked outside
+  window.addEventListener('click', (event) => {
+      if (!button.contains(event.target)) {
+          dropdownMenu.classList.add('hidden');
+      }
+  });
+
+  
+</script>
+
+</body>
+</html>

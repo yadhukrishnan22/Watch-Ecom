@@ -1,0 +1,52 @@
+{%extends 'store/base.html'%}
+
+{%block main_block%}
+
+<body class="bg-gray-100"></body>
+
+    <div class="flex justify-center items-center h-screen">
+        <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl flex">
+
+            <!-- Product Overview Section -->
+            <div class="w-1/2 pr-4">
+                <h3 class="text-xl font-bold">{{product.product_obj.title}}</h3>
+                <p class="text-gray-600">{{product.product_obj.description}}</p>
+                <div class="mt-4">
+                    <img src="{{product.varient_image.url}}" style="height: 150px; width: 150px;" alt="Product Image" class="mx-auto rounded shadow-md">
+                </div>
+                <p class="mt-2 text-lg font-semibold"></p>
+            </div>
+
+            <!-- Review Form Section -->
+            <div class="w-1/2 pl-4">
+                <h2 class="text-2xl font-semibold mb-6 text-center">Add Your Review</h2>
+                <form method="POST">
+
+                    {%csrf_token%}
+                    
+
+                    <div class="mb-4">
+                        <label for="rating" class="block text-gray-700">Rating</label>
+                        {{form.rating}}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="comments" class="block text-gray-700">Comments</label>
+                        {{form.comment}}
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <button type="submit" 
+                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200">
+                            Submit Review
+                        </button>
+                        <a href="#" class="text-blue-500 hover:underline">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+{%endblock%}

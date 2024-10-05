@@ -1,0 +1,142 @@
+{%extends 'store/base.html'%}
+
+{%block main_block%}
+
+
+
+<div class="mx-auto my-4 max-w-6xl px-2 md:my-6 md:px-0">
+
+  <h2 class="text-3xl font-bold flex justify-between items-center">
+    Order Details
+    <a href="{%url 'purchase-view'%}" class="ml-4 inline-block rounded-md bg-green-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500">
+        View Paid Orders
+    </a>
+</h2>
+   
+
+    {%for o in orders%}
+
+    <div class="mt-8 flex flex-col overflow-hidden rounded-lg border border-gray-300 md:flex-row">
+        <div class="w-full border-r border-gray-300 bg-yellow-100 md:max-w-xs">
+          <div class="p-8">
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-1">
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Order Id</div>
+                <div class="text-sm font-medium text-gray-700">{{o.order_id}}</div>
+              </div>
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Order Date</div>
+                <div class="text-sm font-medium text-gray-700">{{o.created_date}}</div>
+              </div>
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Total Amount</div>
+                <div class="text-sm font-medium text-gray-700">₹{{o.total}}</div>
+              </div>
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Order Status</div>
+                <div class="text-sm font-medium text-gray-700">
+                  {%if o.is_paid%}
+
+                  Payment_completed
+
+                {%else%}
+
+                  Payment Pending
+                  
+                {%endif%}
+                </div>
+
+                
+              </div>
+
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Payment Method</div>
+                <div class="text-sm font-medium text-gray-700"> {{o.payment_method}}</div>
+              </div>
+
+              <div class="mb-5">
+                <div class="text-lg font-bold">User Details</div>
+              </div>
+
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Name</div>
+                <div class="text-sm font-medium text-gray-700">{{request.user}}</div>
+              </div> 
+
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Phone</div>
+                <div class="text-sm font-medium text-gray-700">{{o.phone}}</div>
+              </div>
+
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Email</div>
+                <div class="text-sm font-medium text-gray-700">{{o.email}}</div>
+              </div>
+
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Delivery Address</div>
+                <div class="text-sm font-medium text-gray-700">{{o.delivery_address}}</div>
+              </div>
+
+              <div class="mb-4">
+                <div class="text-sm font-semibold">Pin Code</div>
+                <div class="text-sm font-medium text-gray-700">{{o.pin}}</div>
+              </div>
+
+    
+
+    
+
+    
+            </div>
+          </div>
+        </div>
+        <div class="flex-1 bg-white">
+          <div class="p-8">
+            <ul class="-my-7 divide-y divide-gray-200">
+              {%for p in o.product_varient_object.all%}
+               
+
+              <li class="flex flex-col justify-between space-x-5 py-7 md:flex-row">
+                <div class="flex flex-1 items-stretch">
+                  <div class="flex-shrink-0">
+                    <img
+                    alt="no image"
+                    class="h-64 w-1/2 rounded object-cover lg:h-96 lg:w-1/2"
+                    src="{{p.varient_image.url}}"
+                  />
+                  </div>
+                  <div class="ml-5 flex flex-col justify-between">
+                    <div class="flex-1">
+                      <p class="text-sm font-bold text-gray-900">
+                        {{p.product_obj.title}}
+                      </p>
+                      <p class="mt-1.5 text-sm font-medium text-gray-500">{{p.product_obj.description}}</p>
+                    </div>
+                    <p class="mt-4 text-sm font-medium text-gray-500">
+                      {%if o.is_paid%}
+
+                      <a href="{%url 'reviews' p.id%}">Add Review</a>
+                      {%endif%}
+                    </p>
+                  </div>
+                </div>
+                <div class="ml-auto flex flex-col items-end justify-between">
+                  <p class="text-right text-sm font-bold text-gray-900">₹{{p.price}}</p>
+                </div>
+              </li>
+
+              {%endfor%}
+            </ul>
+            
+            
+          </div>
+        </div>
+      </div>
+
+    {%endfor%}
+
+  </div>
+  
+
+{%endblock%}

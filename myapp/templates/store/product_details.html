@@ -1,0 +1,56 @@
+{%extends 'store/base.html'%}
+
+{%block main_block%}
+
+<section class="overflow-hidden">
+    <div class="mx-auto max-w-5xl px-5 py-24">
+      <div class="mx-auto flex flex-wrap items-center lg:w-4/5">
+        <img
+          style="height: 450px; padding: 40px;"
+          alt="Nike Air Max 21A"
+          class="h-64 w-full rounded object-cover lg:h-96 lg:w-1/2"
+          src="{{details.image.url}}"
+        />
+        <div class="mt-6 w-full lg:mt-0 lg:w-1/2 lg:pl-10">
+          <h2 class="text-sm font-semibold tracking-widest text-gray-500">
+            {{details.brand_obj.name}}
+          </h2>
+          <h1 class="my-4 text-3xl font-semibold text-black">{{details.title}}</h1>
+          <div class="my-4 flex items-center">
+         
+          </div>
+       
+          <div class="mb-5 mt-6 flex items-center border-b-2 border-gray-100 pb-5">
+            <div class="flex items-center">
+             
+                 
+              <div class="mt-4">
+                <h2 class="text-lg font-semibold">Select Variant:</h2>
+                <div class="mt-4">
+                {%for v in varients%}
+                  {%for c in v.color_obj.all%}
+
+               
+                  <a href="{%url 'product-varient' v.id%}" class="variant-button mr-2 bg-gray-200 text-gray-700 rounded px-4 py-2 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 ">{{c}}</a>
+                  {%endfor%}
+                {%endfor%}    
+                   
+                </div>
+            </div>
+
+            </div>
+            
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="title-font text-xl font-bold text-gray-900">
+              ₹{{details.base_price}}
+            </span>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+{%endblock%}
