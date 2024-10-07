@@ -6,7 +6,7 @@ from django.views.generic import View, UpdateView, TemplateView
 
 from django.contrib.auth import authenticate, login, logout
 
-from myapp.models import UserProfile, Product, ProductVarient, Color, CartItems, OrderSummary, Brand, IdealFor, Type
+from myapp.models import UserProfile, Product, ProductVarient, Color, CartItems, OrderSummary, Brand, IdealFor,Reviews, Type
 
 from django.urls import reverse, reverse_lazy
 
@@ -15,6 +15,10 @@ from myapp.decorators import signin_required
 import razorpay
 
 from decouple import config
+
+from django.utils.decorators import method_decorator
+
+from django.views.decorators.csrf import csrf_exempt
 
 from django.utils.decorators import method_decorator
 
@@ -79,6 +83,7 @@ class SignInView(View):
             
             return render(request, 'store/login.html', {'form':form_instance})
 
+
 @method_decorator(signin_required, name='dispatch')
 class SignOutView(View):
 
@@ -87,6 +92,7 @@ class SignOutView(View):
         logout(request)
 
         return redirect('publicindex')
+
 
 @method_decorator(signin_required, name='dispatch')
 class UserProfileUpdateView(UpdateView):
@@ -101,6 +107,7 @@ class UserProfileUpdateView(UpdateView):
     def get_success_url(self):
 
         return reverse('index')
+
 
 @method_decorator(signin_required, name='dispatch')
 class IndexView(View):
@@ -176,9 +183,7 @@ class IndexView(View):
 
         return render(request, 'store/index2.html', {'brands':brand_values, 'products':qs, 'gender':idealfor, 'types':type})
 
-        
-
-        
+                
 @method_decorator(signin_required, name='dispatch')
 class ProductDetailsView(View):
 
@@ -188,9 +193,12 @@ class ProductDetailsView(View):
 
         details = Product.objects.get(id = id)
 
+        review_comments = Reviews.objects.filter(product_object = id)
+
         qs = ProductVarient.objects.filter(product_obj = id)
 
-        return render(request, 'store/product_details.html', {'varients':qs,'details':details})
+        return render(request, 'store/product_details.html', {'varients':qs,'details':details, 'reviews':review_comments})
+
 
 @method_decorator(signin_required, name='dispatch')
 class ProductVarientView(View):
@@ -211,6 +219,7 @@ class ProductVarientView(View):
 
         return render(request, 'store/product_varient.html', {'varients':qs, 'color':a})
 
+
 @method_decorator(signin_required, name='dispatch')
 class AddToCart(View):
 
@@ -228,6 +237,7 @@ class AddToCart(View):
 
         return redirect('index')
 
+
 @method_decorator(signin_required, name='dispatch')
 class CartListView(View):
 
@@ -241,6 +251,7 @@ class CartListView(View):
 
         return render(request, 'store/cart.html', {'cartitems':qs})
 
+
 @method_decorator(signin_required, name='dispatch')
 class CartItemsDeleteView(View):
 
@@ -253,6 +264,7 @@ class CartItemsDeleteView(View):
         print('Item deleted from cart')
 
         return redirect('cart-list')
+
 
 @method_decorator(signin_required, name='dispatch')
 class DeliveryDetailsView(View):
@@ -344,17 +356,6 @@ class CheckOutView(View):
 
 
 
-   
-
-
-
-
-
-
-from django.views.decorators.csrf import csrf_exempt
-
-from django.utils.decorators import method_decorator
-
 # @method_decorator(signin_required, name='dispatch')
 @method_decorator(csrf_exempt, name='dispatch')
 class PaymentVerificationView(View):
@@ -383,7 +384,8 @@ class PaymentVerificationView(View):
 
         
         return redirect('index')
-    
+
+
 @method_decorator(signin_required, name='dispatch')
 class MyPurchaseView(View):
 
@@ -496,9 +498,11 @@ class PublicProductDetailsView(View):
 
         details = Product.objects.get(id = id)
 
+        review_comments = Reviews.objects.filter(product_object = id)
+
         qs = ProductVarient.objects.filter(product_obj = id)
 
-        return render(request, 'store/public_product_details.html', {'varients':qs,'details':details})
+        return render(request, 'store/public_product_details.html', {'varients':qs,'details':details, 'reviews':review_comments})
 
 
 class PublicProductVarientView(View):

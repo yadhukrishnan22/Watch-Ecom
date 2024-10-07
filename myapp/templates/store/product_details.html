@@ -47,6 +47,40 @@
             </span>
            
           </div>
+
+          <div class="mt-8 bg-green-100 shadow-lg rounded-lg p-6 ">
+            <h2 class="text-xl font-semibold">Customer Reviews</h2>
+            <div class="mt-2 flex items-center">
+                <span class="text-green-500 font-bold text-xl">★</span>
+                {%if details.reviews_avg%}
+
+                  <span class="text-gray-600 ml-2"> ({{details.reviews_avg}}/5) based on <span class="font-bold">{{details.total_counts}} reviews</span></span>
+
+                {%else%}
+
+                  <p class="p-2"> 0 reviews</p>
+
+                {%endif%}
+            </div>
+            <div class="mt-4">
+               
+                <div class="border-b pb-4 mb-4">
+                   {%for c in reviews%}
+
+                     <div class="flex items-center justify-between">
+                      <span class="font-bold">{{c.user_object}}</span>
+                      <span class="text-gray-500 text-sm">{{c.created_date}}</span>
+                      </div>
+                      <div class="mt-1">
+                      <p class="text-gray-700">{{c.comment}}</p>
+                    </div>
+
+                   {%endfor%}
+                </div>
+
+        </div>
+      </div>
+
         </div>
       </div>
     </div>

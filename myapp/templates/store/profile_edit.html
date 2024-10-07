@@ -20,10 +20,10 @@
             <div class="bg-white shadow-md rounded-lg p-6">
                 <h1 class="text-2xl font-semibold mb-4">User Profile</h1>
                 <div class="flex items-center mb-6">
-                    <img id="profile-picture" class="w-24 h-24 rounded-full mr-4" src="https://via.placeholder.com/150" alt="Profile Picture">
+                    <img id="profile-picture" class="w-24 h-24 rounded-full mr-4" src="" alt="Profile Picture">
                     <div>
-                        <h2 class="text-xl font-bold">John Doe</h2>
-                        <p class="text-gray-600">john.doe@example.com</p>
+                        <h2 class="text-xl font-bold">{{request.user}}</h2>
+                        <p class="text-gray-600">{{request.user.email}}</p>
                     </div>
                 </div>
                 

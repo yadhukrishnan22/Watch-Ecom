@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from django.db.models.signals import post_save
 
-from django.db.models import Sum
+from django.db.models import Sum, Avg
 
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -87,6 +87,17 @@ class Product(models.Model):
     def __str__(self):
 
         return self.title
+    
+    @property
+    def reviews_avg (self):
+
+        return self.project_reviews.all().values('rating').aggregate(avg = Avg('rating')).get('avg')
+    
+    @property
+    def total_counts(self):
+
+        return self.project_reviews.all().count()
+    
 
 
 
