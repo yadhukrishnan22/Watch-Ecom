@@ -520,12 +520,12 @@ class PublicProductVarientView(View):
         return render(request, 'store/public_product_varient.html', {'varients':qs, 'color':a})
     
 
-
 class TestView(View):
 
     def get(self, request, *args, **kwargs):
 
         return render(request, 'store/test.html')
+
 
 class ReviewCreateView(View):
 
