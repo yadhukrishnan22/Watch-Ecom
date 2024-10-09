@@ -22,6 +22,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.utils.decorators import method_decorator
 
+from django.contrib import messages
+
 KEY_SECRET = config('KEY_SECRET')
 
 KEY_ID = config('KEY_ID')
@@ -44,11 +46,12 @@ class SignUpView(View):
 
             form_instance.save()
 
-            print("Register Successfull")
+            messages.success("Successfully registered")
 
             return redirect('sign-in')
         
-        print("Registeration Failed")
+        messages.error("Failed to register")
+
         
         return render(request, 'store/register.html', {'form':form_instance})
 
@@ -77,9 +80,11 @@ class SignInView(View):
 
                 login(request, user_obj)
 
-                print(' login successfull')
+                messages.success(request, "Login Successfull")
 
                 return redirect('index')
+            
+            messages.error(request, "Login Failed")
             
             return render(request, 'store/login.html', {'form':form_instance})
 
@@ -421,9 +426,7 @@ class PublicIndexView(View):
         type = Type.objects.all()
 
         qs = Product.objects.all()
-
-        print(request.user)
-
+        
 
         return render(request, 'store/public_index.html', {'brands':brand, 'products':qs, 'gender':idealfor, 'types':type})
     
