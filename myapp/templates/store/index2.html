@@ -4,13 +4,44 @@
 
 {%block main_block%}
 
+   <div >
 
+    {%if messages%}
+
+           
+    {%for m in messages%}
+
+    <div id="alert" class="fixed top-5 left-1/2 transform -translate-x-1/2 max-w-sm w-full bg-green-100 shadow-md rounded-lg p-4 fade z-50">
+        <div class="flex items-center">
+            <div class="flex-shrink-0">
+                <svg class="text-green-700 h-6 w-6 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12.76a9.003 9.003 0 01-8.2 8.956M12 3v1m8.4 3.267A9.003 9.003 0 0012 3m0 0a9.003 9.003 0 00-8.4 3.267M4.6 12.76A9.003 9.003 0 0012 21c.7 0 1.39-.09 2.06-.26" />
+                </svg>
+            </div>
+            <div class="ml-3 ">
+                <p class="text-green-700 font-bold">{{m}}</p>
+            </div>
+            <button id="close-btn" class="ml-auto text-green-500 hover:text-red-700">
+                &times;
+            </button>
+        </div>
+    </div>
+
+
+    {%endfor%}
+
+    {%endif%}
+
+   </div>
 
 
 
 
     <!-- Main Content -->
     <div class="max-w-6xl mx-auto px-0 py-12 flex">
+
+        
+
         <!-- Filter Section -->
         <div class="w-1/4 bg-white shadow-lg rounded-lg p-4 mr-8">
             <h2 class="text-xl font-bold mb-4">Filters</h2>
@@ -67,6 +98,8 @@
 
         <!-- Product Showcase -->
         <div class="w-3/4">
+
+            
             
             <header class="hero-bg text-white text-center py-20 mb-8">
                 <h1 class="text-4xl font-bold">Welcome to Our Online Store!</h1>
@@ -101,6 +134,27 @@
             </div>
         </div>
     </footer>
-</body>
+
+    
+    <script>
+        const alertBox = document.getElementById('alert');
+        const closeButton = document.getElementById('close-btn');
+
+        // Function to close the alert
+        function closeAlert() {
+            alertBox.classList.add('fade-out');
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 500); // Match this duration to the CSS transition duration
+        }
+
+        // Close alert on button click
+        closeButton.addEventListener('click', closeAlert);
+
+        // Automatically close the alert after 3 seconds
+        setTimeout(closeAlert, 3000);
+    </script>
+
+
 
 {%endblock%}

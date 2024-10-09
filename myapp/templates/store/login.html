@@ -7,6 +7,15 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
+        
+        .fade {
+            transition: opacity 0.5s ease;
+        }
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
         .bg-login {
             background-image: url({%static "images/watchbackground.jpg"%}); 
             background-size: cover;
@@ -20,6 +29,32 @@
 
 
     <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+
+        {%if messages%}
+
+           
+        {%for m in messages%}
+
+        <div id="alert" class="max-w-sm w-full bg-white shadow-md rounded-lg p-4">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-6 w-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12.76a9.003 9.003 0 01-8.2 8.956M12 3v1m8.4 3.267A9.003 9.003 0 0012 3m0 0a9.003 9.003 0 00-8.4 3.267M4.6 12.76A9.003 9.003 0 0012 21c.7 0 1.39-.09 2.06-.26" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-red-700 font-bold">{{m}}</p>
+                </div>
+                <button id="close-btn" class="ml-auto text-red-500 hover:text-red-700">
+                    &times;
+                </button>
+            </div>
+        </div>
+
+
+        {%endfor%}
+
+        {%endif%}
         <h2 class="text-2xl font-bold text-center mb-6">Login to Your Account</h2>
         <form method="post">
             {%csrf_token%}
@@ -37,6 +72,21 @@
         </form>
         <p class="mt-4 text-center text-sm text-gray-600">Don't have an account? <a href="{%url 'sign-up'%}" class="text-blue-500 hover:underline">Register</a></p>
     </div>
+
+
+
+    <script>
+        const alertBox = document.getElementById('alert');
+        const closeButton = document.getElementById('close-btn');
+
+        // Function to close the alert
+        closeButton.addEventListener('click', () => {
+            alertBox.classList.add('fade-out');
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 500); // Match this duration to the CSS transition duration
+        });
+    </script>
 
 </body>
 </html>

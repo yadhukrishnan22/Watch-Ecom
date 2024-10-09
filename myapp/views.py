@@ -62,7 +62,6 @@ class SignInView(View):
 
         form_instance = LoginForm()
 
-        print(form_instance)
 
         return render(request, 'store/login.html', {'form':form_instance})
     
@@ -95,6 +94,8 @@ class SignOutView(View):
     def get(self, request, *args, **kwargs):
 
         logout(request)
+
+        messages.success(request, "Logged Out")
 
         return redirect('publicindex')
 
@@ -238,7 +239,7 @@ class AddToCart(View):
         CartItems.objects.create(cart_object = request.user.basket,
                                  product_varient_object = product_varient_obj)
         
-        print('successfully added to cart')
+        messages.success(request, "Item Added To Cart")
 
         return redirect('index')
 

@@ -7,6 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+
+    .fade {
+            transition: opacity 0.5s ease;
+        }
+    .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
     .hero-bg {
         background-image: url({%static 'images/timex3.jpg'%}); 
         background-size: cover;
@@ -98,6 +106,26 @@
 {%endblock%}
 
 <script>
+  const alertBox = document.getElementById('alert');
+  const closeButton = document.getElementById('close-btn');
+
+  // Function to close the alert
+  function closeAlert() {
+      alertBox.classList.add('fade-out');
+      setTimeout(() => {
+          alertBox.style.display = 'none';
+      }, 500); // Match this duration to the CSS transition duration
+  }
+
+  // Close alert on button click
+  closeButton.addEventListener('click', closeAlert);
+
+  // Automatically close the alert after 3 seconds
+  setTimeout(closeAlert, 3000);
+</script>
+
+<script>
+
   const button = document.getElementById('options-menu');
   const dropdownMenu = document.getElementById('dropdown-menu');
 
